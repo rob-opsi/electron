@@ -1,12 +1,16 @@
 import { app, Menu } from 'electron/main';
 import { shell } from 'electron/common';
 
-const v8Util = process._linkedBinding('electron_common_v8_util');
-
 const isMac = process.platform === 'darwin';
 
+let applicationMenuSet = false;
+
+export const setApplicationMenuSet = () => {
+  applicationMenuSet = true;
+};
+
 export const setDefaultApplicationMenu = () => {
-  if (v8Util.getHiddenValue<boolean>(global, 'applicationMenuSet')) return;
+  if (applicationMenuSet) return;
 
   const helpMenu: Electron.MenuItemConstructorOptions = {
     role: 'help',
