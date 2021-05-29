@@ -280,6 +280,10 @@ void SetNodeOptions(base::Environment* env) {
 
     // overwrite new NODE_OPTIONS without unsupported variables
     env->SetVar("NODE_OPTIONS", options);
+    // https://github.com/electron/electron/issues/27551
+#if defined(OS_WIN)
+    ::_putenv_s("NODE_OPTIONS", options.c_str());
+#endif
   }
 }
 
